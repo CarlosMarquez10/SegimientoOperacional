@@ -1,9 +1,10 @@
 import {Router} from 'express';
+import { ConsultaCorreriatpl } from '../controller/consultas.controller';
 
-import { ConsultarCorreria } from '../service/consultas.service.js';
+ConsultaCorreriatpl
 
 const route = Router()
 
-route.post('/tpl',ConsultarCorreria)
+route.post('/tpl',ConsultaCorreriatpl)
 
 export default route;
