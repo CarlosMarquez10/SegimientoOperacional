@@ -1,10 +1,9 @@
-import {Router} from 'express';
-import { ConsultaCorreriatpl } from '../controller/consultas.controller';
 
-ConsultaCorreriatpl
+import { Router } from 'express';
+import { ConsultaCorreriatpl } from '../controller/consultas.controller.js';
 
-const route = Router()
+const route = Router();
 
-route.post('/tpl',ConsultaCorreriatpl)
+route.post('/tpl', ConsultaCorreriatpl);
 
 export default route;

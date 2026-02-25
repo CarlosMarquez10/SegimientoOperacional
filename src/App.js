@@ -10,7 +10,7 @@ app.use(express.json());
 
 
 app.use('/correria', getCorreriaPte);
-app.use('/ConsultaCoreria', CorreriaTpl);
+app.use('/correria', CorreriaTpl);
 
 app.listen(port, () => {
   console.log(`corriendo en el puerto ${port}`);
