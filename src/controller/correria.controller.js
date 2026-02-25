@@ -1,14 +1,25 @@
-import { TbCorreria } from "../service/correria.service.js"
+import { TbCorreria } from "../service/correria.service.js";
 
-export const CorreriaPendientes = (req, res) =>{
-   // consultar en la tabla de correria hacer un select *
+export const CorreriaPendientes = async (req, res) => {
+  try {
+    // Espera el resultado de la consulta
+    const dataCorreria = await TbCorreria(); // ← Asegúrate de poner await
 
-   try {
+    // Si tu función puede devolver null (no encontrado)
+    if (dataCorreria == null) {
+      return res.status(404).json({ message: 'No se encontraron correrias programadas' });
+    }
 
-      const dataCorreria = TbCorreria();
-      res.send(dataCorreria)
-      
-   } catch (error) {
-      console.log('problema al procesar los datos recibidos')
-   }
-}
+    // Si devuelve array, valida vacío (opcional)
+    if (Array.isArray(dataCorreria) && dataCorreria.length === 0) {
+      return res.status(200).json({ data: [], message: 'No hay correrias programadas' });
+    }
+
+    // Respuesta OK
+    return res.status(200).json({ data: dataCorreria });
+  } catch (error) {
+    console.error('Problema al procesar los datos recibidos:', error);
+    return res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};
+

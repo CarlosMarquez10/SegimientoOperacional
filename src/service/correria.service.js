@@ -4,7 +4,11 @@ export async function TbCorreria() {
     
     try {
         
-    const [row] = pool.execute('SELECT * FROM correria')
+    const [row] = await pool.execute('SELECT * FROM correrias')
+    if(row.length === 0) {
+        return null;
+    }
+
     return row;
 
     } catch (error) {
