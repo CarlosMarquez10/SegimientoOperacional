@@ -1,9 +1,12 @@
 import express from 'express';
-import getCorreriaPte from './routes/Correria.routes.js'
+import getCorreriaPte from './routes/Correria.routes.js';
+import 'dotenv/config';
+
+const port = process.env.PORT
 
 const app = express();
 app.use(express.json());
-const port = 3012;
+
 
 app.use('/correria', getCorreriaPte)
 
