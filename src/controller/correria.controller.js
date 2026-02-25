@@ -3,7 +3,7 @@ import { TbCorreria } from "../service/correria.service.js";
 export const CorreriaPendientes = async (req, res) => {
   try {
     // Espera el resultado de la consulta
-    const dataCorreria = await TbCorreria(); // ← Asegúrate de poner await
+    const dataCorreria = await TbCorreria(); // como es async se coloca await
 
     // Si tu función puede devolver null (no encontrado)
     if (dataCorreria == null) {
