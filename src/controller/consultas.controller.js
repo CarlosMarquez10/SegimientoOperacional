@@ -16,8 +16,24 @@ export const ConsultaCorreriatpl = async (req, res) => {
         message: "No se encontraron órdenes en la correria especificada",
       });
     }
+    
+    const Datafin = Result.map((Elem, Index, Arr) =>{
+        return{
+            Correria: Elem.Correria,
+            Tarea: Elem.Tarea,
+            DescripcionTarea: Elem.DescripcionTarea,
+            Direccion: Elem.Direccion,
+            Medidor: Elem.Medidor,
+            Ciclo: Elem.Ciclo,
+            RutaLectura: Elem.RutaLectura,
+            EstadoComunicacion: Elem.EstadoComunicacion,
+            UsuariLabor: Elem.UsuarioLabor,
+            TerminalDescarga: Elem.TerminalDescarga,
+            Coordenada: Elem.GPS
+        }
+    })
 
-    return res.status(200).json({ data: Result });
+    return res.status(200).json({ data: Datafin });
 
   } catch (error) {
     console.error('Problema al procesar los datos recibidos:', error);
