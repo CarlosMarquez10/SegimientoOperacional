@@ -1,4 +1,5 @@
 
+import { EncontrarEmpleado } from "../service/consultarEmpleado.service.js";
 import { ConsultarCorreria } from "../service/consultas.service.js";
 
 export const ConsultaCorreriatpl = async (req, res) => {
@@ -20,7 +21,6 @@ export const ConsultaCorreriatpl = async (req, res) => {
     const Datafin = Result.map((Elem, Index, Arr) =>{
         return{
             Correria: Elem.Correria,
-            Tarea: Elem.Tarea,
             DescripcionTarea: Elem.DescripcionTarea,
             Direccion: Elem.Direccion,
             Medidor: Elem.Medidor,
@@ -28,6 +28,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
             RutaLectura: Elem.RutaLectura,
             EstadoComunicacion: Elem.EstadoComunicacion,
             UsuariLabor: Elem.UsuarioLabor,
+            Operario : EncontrarEmpleado(Elem.UsuarioLabor),
             TerminalDescarga: Elem.TerminalDescarga,
             Coordenada: Elem.GPS
         }
