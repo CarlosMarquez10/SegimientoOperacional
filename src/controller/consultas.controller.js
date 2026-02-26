@@ -3,7 +3,9 @@ import { ConsultarCorreria } from "../service/consultas.service.js";
 
 export const ConsultaCorreriatpl = async (req, res) => {
   try {
-    const { NumCorreria } = req.body;
+    const { NumCorreria, CantidadOst } = req.body;
+
+    let cantidadDescargadas = 0;
 
     if (!NumCorreria) {
       return res.status(400).json({ message: "Falta el número de correria" });
@@ -22,6 +24,9 @@ export const ConsultaCorreriatpl = async (req, res) => {
     const Datafin = await Promise.all(
       Result.map(async (Elem) => {
         const operario = await EncontrarEmpleado(Elem.UsuarioLabor);
+        if(Elem.EstadoComunicacion == "D"){
+          cantidadDescargadas = cantidadDescargadas + 1;
+        }
 
         return {
           Correria: Elem.Correria,
@@ -44,7 +49,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
       })
     );
 
-    return res.status(200).json({ data: Datafin, cantidad });
+    return res.status(200).json({ data: Datafin, cantidad, CantidadOst, cantidadDescargadas });
   } catch (error) {
     console.error("Problema al procesar los datos recibidos:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
