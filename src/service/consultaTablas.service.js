@@ -12,7 +12,9 @@ export async function TablaCorreria () {
                 correria: e.Correia
             }
         })
-        return data;
+
+        
+        return json({data: data});
 
     } catch (error) {
         
