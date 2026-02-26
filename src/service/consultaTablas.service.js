@@ -18,7 +18,7 @@ export async function TablaRevisionesSirius () {
     try {
         const [rows] = await pool.execute('SELECT * FROM revisiones_sirius');
         if (!rows || rows.length === 0) return null;
-        console.log('Datos de TablaRevisionesSirius:', rows); // <-- para verificar los datos obtenidos
+        console.log('Datos de TablaRevisionesSirius:', rows[0]); // <-- para verificar los datos obtenidos
         return rows; // <-- los datos para compartir o manejar en otro modulos
     } catch (error) {
         console.error('Error en TablaRevisionesSirius:', error);
