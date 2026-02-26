@@ -10,6 +10,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
     }
 
     const Result = await ConsultarCorreria(NumCorreria);
+    const cantidad = Result.length;
 
     if (!Array.isArray(Result) || Result.length === 0) {
       return res.status(404).json({
@@ -43,7 +44,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
       })
     );
 
-    return res.status(200).json({ data: Datafin });
+    return res.status(200).json({ data: Datafin, cantidad });
   } catch (error) {
     console.error("Problema al procesar los datos recibidos:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
