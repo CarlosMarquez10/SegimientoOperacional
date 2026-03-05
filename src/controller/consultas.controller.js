@@ -1,5 +1,6 @@
 import { EncontrarEmpleado } from "../service/consultarEmpleado.service.js";
 import { ConsultarCorreria } from "../service/consultas.service.js";
+import { GetCars } from "../service/gpstable.service.js";
 
 export const ConsultaCorreriatpl = async (req, res) => {
   try {
@@ -17,6 +18,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
       return res.status(400).json({ message: "Falta el número de correria" });
     }
 
+    const cars = await GetCars();
     const Result = await ConsultarCorreria(NumCorreria);
     const cantidad = Result ? Result.length : 0;
 
@@ -47,6 +49,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
             EstadoComunicacion: Elem.EstadoComunicacion,
             EstadoTarea: Elem.EstadoTarea,
             UsuarioLabor: Elem.UsuarioLabor,
+            cars: cars,
             Operario: operario ?? {
               Nombre: "No existe",
               Regional: "No existe",
@@ -77,6 +80,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
             EstadoComunicacion: Elem.EstadoComunicacion,
             EstadoTarea: Elem.EstadoTarea,
             UsuarioLabor: Elem.UsuarioLabor, // nombre consistente
+            cars: cars, // Agrega los datos de cars al resultado
             Operario: operario ?? {
               Nombre: "No existe",
               Regional: "No existe",
@@ -103,6 +107,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
           EstadoComunicacion: Elem.EstadoComunicacion,
           EstadoTarea: Elem.EstadoTarea,
           UsuarioLabor: Elem.UsuarioLabor, // nombre consistente
+          cars: cars, // Agrega los datos de cars al resultado
           Operario: operario ?? {
             Nombre: "No existe",
             Regional: "No existe",
