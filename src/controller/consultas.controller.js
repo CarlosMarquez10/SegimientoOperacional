@@ -4,7 +4,10 @@ import { GetCars } from "../service/gpstable.service.js";
 
 export const ConsultaCorreriatpl = async (req, res) => {
   try {
-    const { NumCorreria, CantidadOst } = req.body;
+    const { NumCorreria, CantidadOst, NombreOperativo } = req.body;
+
+  
+    console.log("Nombre del operario recibido:", NombreOperativo);
 
     let cantidadDescargadas = 0;
     let cantidadDescargadaCanceladas = 0;
@@ -18,7 +21,7 @@ export const ConsultaCorreriatpl = async (req, res) => {
       return res.status(400).json({ message: "Falta el número de correria" });
     }
 
-    const cars = await GetCars();
+    const cars = await GetCars(NombreOperativo);
     const Result = await ConsultarCorreria(NumCorreria);
     const cantidad = Result ? Result.length : 0;
 
