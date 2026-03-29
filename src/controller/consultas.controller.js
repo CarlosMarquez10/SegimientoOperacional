@@ -1,6 +1,6 @@
 import { EncontrarEmpleado } from "../service/consultarEmpleado.service.js";
 import { ConsultarCorreria } from "../service/consultas.service.js";
-import { GetCars } from "../service/gpstable.service.js";
+import { GetAllCars, GetCars } from "../service/gpstable.service.js";
 
 export const ConsultaCorreriatpl = async (req, res) => {
   try {
@@ -128,6 +128,31 @@ export const ConsultaCorreriatpl = async (req, res) => {
   } catch (error) {
     console.error("Problema al procesar los datos recibidos:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+
+export const ConsultarCars = async (req, res) => {
+  try {
+    const { NombreOperativo } = req.body;
+
+    if (NombreOperativo === 'ALL') {
+      const result = await GetAllCars();
+      if (!result) return res.status(404).json({ message: 'No hay vehículos' });
+      return res.status(200).json({
+        data:  result.cars,
+        stats: result.stats,
+      });
+    } else {
+      const result = await GetCars(NombreOperativo);
+      if (!result) return res.status(404).json({ message: 'No se encontraron vehículos para el operario proporcionado' });
+      return res.status(200).json({
+        data:  result.cars,
+        stats: result.stats,
+      });
+    }
+  } catch (error) {
+    console.error('Problema al procesar los datos recibidos:', error);
+    return res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
 

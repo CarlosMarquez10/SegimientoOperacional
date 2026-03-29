@@ -1,8 +1,10 @@
 import express from 'express';
 import getCorreriaPte from './routes/Correria.routes.js';
 import CorreriaTpl from './routes/consultas.routes.js';
+import ConsultarCars  from './routes/consultaCars.routes.js';
 import cors from 'cors';
 import 'dotenv/config';
+
 
 const port = process.env.PORT
 
@@ -30,6 +32,7 @@ app.use(cors(corsOptions));
 
 app.use('/correria', getCorreriaPte);
 app.use('/correria', CorreriaTpl);
+app.use('/all', ConsultarCars);
 
 app.listen(port, () => {
   console.log(`corriendo en el puerto ${port}`);
