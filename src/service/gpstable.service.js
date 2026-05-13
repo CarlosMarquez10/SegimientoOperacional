@@ -1,14 +1,13 @@
 import { pool } from "../Connetion/db.js";
 
-
 // Helper que calcula las tarjetas de stats
 function buildStats(cars) {
   return {
     totalVehiculos: cars.length,
-    motos: cars.filter(c => c.type === 'moto').length,
-    camionetas: cars.filter(c => c.type === 'carro').length,
-    enLinea: cars.filter(c => c.active === 'ONLINE').length,
-    offLine: cars.filter(c => c.active !== 'ONLINE').length,
+    motos: cars.filter((c) => c.type === "moto").length,
+    camionetas: cars.filter((c) => c.type === "carro").length,
+    enLinea: cars.filter((c) => c.active === "ONLINE").length,
+    offLine: cars.filter((c) => c.active !== "ONLINE").length,
   };
 }
 
@@ -27,6 +26,10 @@ export async function GetCars(NombreOperativo) {
     ];
 
     const conductores = [
+      { placa: "XKH46H", operador: "JONATHAN PINZON" },
+      { placa: "MTY10G", operador: "LONARDI ALBARRACIN" },
+      { placa: "ATR38I", operador: "KEVIN CORREA" },
+      { placa: "ATX23I", operador: "EDGAR PEREZ" },
       { placa: "LTO423", operador: "DRASTICO LTO423" },
       { placa: "HPW184", operador: "DRASTICO HPW184" },
       { placa: "CUX039", operador: "DRASTICO CUX039" },
@@ -170,13 +173,14 @@ export async function GetCars(NombreOperativo) {
       { placa: "SBV76H", operador: "JOHAN GALVIS" },
       { placa: "CCX27H", operador: "IVAN PEÑARANDA" },
       { placa: "ARI40I", operador: "JUAN VILLEGAS" },
-      { placa: "ZPU62H", operador: "RUEDA JENER" },
-      { placa: "MTY10G", operador: "NUEVO MTY10G" },
-      { placa: "XKH46H", operador: "NUEVO XKH46H" },
-      { placa: "ATR38I", operador: "NUEVO ATR38I" }
+      { placa: "ZPU62H", operador: "RUEDA JENER" }
     ];
-    const placa = conductores.find(o => o.operador === NombreOperativo)?.placa; // Reemplaza "SPT58G" con la placa que deseas buscar
-    const [rows] = await pool.execute("SELECT * FROM cars WHERE alias = ?", [placa]);
+    const placa = conductores.find(
+      (o) => o.operador === NombreOperativo,
+    )?.placa; // Reemplaza "SPT58G" con la placa que deseas buscar
+    const [rows] = await pool.execute("SELECT * FROM cars WHERE alias = ?", [
+      placa,
+    ]);
     // recorrer el array de resultados y mostrar algunas propiedaddes con map
 
     const cars = rows.map((car) => ({
@@ -185,7 +189,7 @@ export async function GetCars(NombreOperativo) {
       latitude: car.latitude,
       speed: car.speed,
       active: car.active,
-      conductor: conductores.find(o => o.placa === car.alias)?.operador,
+      conductor: conductores.find((o) => o.placa === car.alias)?.operador,
       marker_color: car.active === "ONLINE" ? car.marker_color : "#FF2C2C",
       type: tipoCars.includes(car.alias) ? "carro" : "moto", // Asigna el tipo basado en el alias
     }));
@@ -213,6 +217,10 @@ export async function GetAllCars() {
     ];
 
     const conductores = [
+      { placa: "XKH46H", operador: "JONATHAN PINZON" },
+      { placa: "MTY10G", operador: "LONARDI ALBARRACIN" },
+      { placa: "ATR38I", operador: "KEVIN CORREA" },
+      { placa: "ATX23I", operador: "EDGAR PEREZ" },
       { placa: "LTO423", operador: "DRASTICO LTO423" },
       { placa: "HPW184", operador: "DRASTICO HPW184" },
       { placa: "CUX039", operador: "DRASTICO CUX039" },
@@ -356,12 +364,8 @@ export async function GetAllCars() {
       { placa: "SBV76H", operador: "JOHAN GALVIS" },
       { placa: "CCX27H", operador: "IVAN PEÑARANDA" },
       { placa: "ARI40I", operador: "JUAN VILLEGAS" },
-      { placa: "ZPU62H", operador: "RUEDA JENER" },
-      { placa: "MTY10G", operador: "NUEVO MTY10G" },
-      { placa: "XKH46H", operador: "NUEVO XKH46H" },
-      { placa: "ATR38I", operador: "NUEVO ATR38I" }
+      { placa: "ZPU62H", operador: "RUEDA JENER" }
     ];
-
 
     const [rows] = await pool.execute("SELECT * FROM cars");
     const cars = rows.map((car) => ({
@@ -370,14 +374,15 @@ export async function GetAllCars() {
       latitude: car.latitude,
       speed: car.speed,
       active: car.active,
-      conductor: conductores.find(o => o.placa === car.alias)?.operador ?? "Sin asignar",
+      conductor:
+        conductores.find((o) => o.placa === car.alias)?.operador ??
+        "Sin asignar",
       marker_color: car.active === "ONLINE" ? car.marker_color : "#FF2C2C",
       type: tipoCars.includes(car.alias) ? "carro" : "moto",
     }));
 
     // console.log(rows[0]);
     return cars.length > 0 ? { cars, stats: buildStats(cars) } : null;
-
   } catch (error) {
     console.error(`Error al consultar correria:`, error);
     return null;
