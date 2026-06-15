@@ -1,21 +1,34 @@
 module.exports = {
   apps: [
     {
-      name: 'SeguimientoOperacional',
-      script: './src/App.js',
+      name: "SeguimientoOperacional",
+      script: "./src/App.js",
       instances: 1,
-      exec_mode: 'fork',
+      exec_mode: "fork",
 
       env: {
-        NODE_ENV: 'development',
-        HOST: '127.0.0.1',
+        NODE_ENV: "development",
+        HOST: "127.0.0.1",
         PORT: 3007,
       },
       env_production: {
-        NODE_ENV: 'production',
-        HOST: '127.0.0.1',
+        NODE_ENV: "production",
+        HOST: "127.0.0.1",
         PORT: 3007,
-      }
+      },
+
+      log_date_format: "YYYY-MM-DD HH:mm:ss Z",
+      out_file: "./logs/out.log",
+      error_file: "./logs/error.log",
+
+      max_memory_restart: "500M",
+      autorestart: true,
+      max_restarts: 10,
+      min_uptime: "10s",
+      kill_timeout: 5000,
+
+      watch: false,
+      ignore_watch: ["node_modules", "logs", "data"],
     },
   ],
 };
