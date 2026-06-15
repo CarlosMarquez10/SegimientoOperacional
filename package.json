@@ -4,7 +4,12 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/App.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start ecosystem.config.cjs",
+    "stop": "pm2 stop SeguimientoOperacional",
+    "restart": "pm2 restart SeguimientoOperacional",
+    "logs": "pm2 logs SeguimientoOperacional",
+    "delete": "pm2 delete SeguimientoOperacional"
   },
   "keywords": [],
   "author": "",

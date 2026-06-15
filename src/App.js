@@ -7,6 +7,7 @@ import 'dotenv/config';
 
 
 const port = process.env.PORT
+const host = process.env.HOST || '127.0.0.1'; 
 
 
 const app = express();
@@ -34,6 +35,6 @@ app.use('/correria', getCorreriaPte);
 app.use('/correria', CorreriaTpl);
 app.use('/all', ConsultarCars);
 
-app.listen(port, () => {
-  console.log(`corriendo en el puerto ${port}`);
+app.listen(port, host, () => {
+  console.log(`corriendo en el puerto ${port} y host ${host}`);
 });
