@@ -34,6 +34,7 @@ app.use(cors(corsOptions));
 app.use('/correria', getCorreriaPte);
 app.use('/correria', CorreriaTpl);
 app.use('/all', ConsultarCars);
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.listen(port, host, () => {
   console.log(`corriendo en el puerto ${port} y host ${host}`);
