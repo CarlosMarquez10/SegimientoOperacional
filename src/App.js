@@ -30,7 +30,7 @@ app.use(cors(corsOptions));
 
 
 
-
+app.get('/', (req, res) => res.json({ status: 'ok' }));
 app.use('/correria', getCorreriaPte);
 app.use('/correria', CorreriaTpl);
 app.use('/all', ConsultarCars);
